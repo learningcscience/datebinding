@@ -1,17 +1,16 @@
 import datebindingtest.TimeService
-import org.grails.web.binding.StructuredPropertyEditor
+import grails.databinding.DataBindingSource
+import grails.databinding.TypedStructuredBindingEditor
+import io.micronaut.core.util.StringUtils
+import org.grails.databinding.converters.AbstractStructuredDateBindingEditor
 
-import java.beans.PropertyEditorSupport
 import java.text.ParseException
+import java.time.LocalDate
 
-class MyStructuredDateEditor extends PropertyEditorSupport implements StructuredPropertyEditor{
+class MyStructuredDateEditor extends AbstractStructuredDateBindingEditor<Date> implements TypedStructuredBindingEditor<Date> {
 
     TimeService timeService
     private static final Set<String> timeZoneIdSet = TimeZone.getAvailableIDs() as Set
-
-    public MyStructuredDateEditor(TimeService timeService){
-        this.timeService = timeService
-    }
 
     @Override
     public List getRequiredFields() {
@@ -24,13 +23,16 @@ class MyStructuredDateEditor extends PropertyEditorSupport implements Structured
     }
 
     @Override
-    public Object assemble(Class type, Map fieldValues)
+    Date assemble(String propertyName, DataBindingSource fieldValues)
             throws IllegalArgumentException {
+        final prefix = propertyName + '_'
+        assert fieldValues.containsProperty(prefix + "dayMonthYear"), "Can't populate a day, month, and year"
 
-        String hourMin = fieldValues.get('hourMin')
-        String meridian = fieldValues.get('meridian')
-        String dayMonthYear = fieldValues.get('dayMonthYear')
-        String tz = fieldValues.get('timeZone')
+
+        String hourMin = fieldValues.getPropertyValue(prefix + 'hourMin')
+        String meridian = fieldValues.getPropertyValue(prefix + 'meridian')
+        String dayMonthYear = fieldValues.getPropertyValue(prefix + 'dayMonthYear')
+        String tz = fieldValues.getPropertyValue(prefix + 'timeZone')
 
 
         Date date
@@ -58,4 +60,15 @@ class MyStructuredDateEditor extends PropertyEditorSupport implements Structured
         }
     }
 
+    // this method may not be called for this implementation
+    // but is abstract in the parent class
+    @Override
+    Date getDate(Calendar c) {
+        c.getTime()
+    }
+
+    @Override
+    Class getTargetType() {
+        Date
+    }
 }
