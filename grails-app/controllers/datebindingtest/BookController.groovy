@@ -29,7 +29,12 @@ class BookController {
         bindData(book, params, [include: whiteList])
 
 
-        book.save(flush:true, failOnError:true)
+        // this should be moved to a transactional service
+        // but I am starting a transaction here just so the code
+        // won't throw an exception...
+        Book.withNewTransaction {
+            book.save(flush: true, failOnError: true)
+        }
 
         redirect(actionName: "index")
 

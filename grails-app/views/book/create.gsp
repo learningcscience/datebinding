@@ -42,6 +42,7 @@
         <option value="PM" >PM</option>
     </select>
 
+    <input type="hidden" name="published" value="date.struct" />
 
     <select name="published_timeZone" id="startDateTime_timeZone" >
         <option value="US/Hawaii" >(GMT-10:00) US/Hawaii</option>
