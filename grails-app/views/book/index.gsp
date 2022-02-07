@@ -17,8 +17,14 @@
 
 
         ${book.title}
+
+        -
+
+        ${book.completed}
+
         -
         ${book.published}
+
 
         <br>
 

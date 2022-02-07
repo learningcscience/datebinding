@@ -23,18 +23,24 @@
 
 
 
+
+    Completed:
+
+
+    <input type="hidden" name="completed" value="date.struct" />
+
+
+    <input type="text" name="completed_dayMonthYear" placeholder="mm/dd/yyyy" >
+
+
+    <br>
+
+
+
+
     Published:
 
-
-
-
-
-
-
-
     <input type="text" name="published_dayMonthYear" />
-
-
 
     <input type="text" name="published_hourMin" id="startDateTime_hourMin" value="8:00" maxLength="5" size="3.5" pattern="^([1-9]|[1][0-2]):[0-5][0-9]$" autocomplete="off" placeholder="hh:ss" />
     <select name="published_meridian" id="startDateTime_meridian" >

@@ -22,8 +22,7 @@ class BookController {
 
         def book = new Book()
 
-
-        def whiteList = ['published_hourMin', 'published_meridian', 'published_timeZone', 'published_dayMonthYear', 'published', 'title']
+        def whiteList = ['published_hourMin', 'published_meridian', 'published_timeZone', 'published_dayMonthYear', 'published', 'title',  'completed', 'completed_dayMonthYear']
 
 
         bindData(book, params, [include: whiteList])
