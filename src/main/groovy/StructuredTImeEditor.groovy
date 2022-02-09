@@ -1,6 +1,3 @@
-import grails.databinding.DataBindingSource
-import grails.databinding.TypedStructuredBindingEditor
-import org.grails.databinding.converters.AbstractStructuredDateBindingEditor
 
 import datebindingtest.TimeService
 import grails.databinding.DataBindingSource
@@ -8,32 +5,33 @@ import grails.databinding.TypedStructuredBindingEditor
 import io.micronaut.core.util.StringUtils
 import org.grails.databinding.converters.AbstractStructuredDateBindingEditor
 
-import java.text.ParseException
-import java.time.LocalDate
-
-
-
+import java.sql.Time
 import java.text.ParseException
 
 //import org.codehaus.groovy.grails.web.binding.StructuredPropertyEditor
 
-class MyStructuredSqlDateEditor extends AbstractStructuredDateBindingEditor<java.sql.Date> implements TypedStructuredBindingEditor<java.sql.Date> {
+class StructuredTImeEditor extends AbstractStructuredDateBindingEditor<java.sql.Time> implements TypedStructuredBindingEditor<java.sql.Time> {
 
 	TimeService timeService
 	private static final Set<String> timeZoneIdSet = TimeZone.getAvailableIDs() as Set
 
 	@Override
 	public List getRequiredFields() {
-		return ['dayMonthYear']
+		return ['hourMin', 'meridian']
 	}
 
 	@Override
 	public List getOptionalFields() {
-		return ['hourMin', 'meridian', 'timeZone']
+		return ['timeZone']
 	}
 
 	@Override
-	java.sql.Date assemble(String propertyName, DataBindingSource fieldValues)
+	Time getDate(Calendar c) {
+		return null
+	}
+
+	@Override
+	java.sql.Time assemble(String propertyName, DataBindingSource fieldValues)
 			throws IllegalArgumentException {
 		final prefix = propertyName + '_'
 		assert fieldValues.containsProperty(prefix + "dayMonthYear"), "Can't populate a day, month, and year"
@@ -41,39 +39,31 @@ class MyStructuredSqlDateEditor extends AbstractStructuredDateBindingEditor<java
 
 		String hourMin = fieldValues.getPropertyValue(prefix + 'hourMin')
 		String meridian = fieldValues.getPropertyValue(prefix + 'meridian')
-		String dayMonthYear = fieldValues.getPropertyValue(prefix + 'dayMonthYear')
 		String tz = fieldValues.getPropertyValue(prefix + 'timeZone')
 
 
-		Date date
-		String formattedDate = dayMonthYear
+		if (!StringUtils.hasText(hourMin) && !StringUtils.hasText(meridian)){
+			return null
+		}
+		def formattedTime = hourMin + (meridian ? " $meridian" : "")
 		TimeZone timeZone
 		if (timeZoneIdSet.contains(tz)) timeZone = TimeZone.getTimeZone(tz)
 		try{
-
-				date = timeService.parseDate(formattedDate, timeZone)
-				date = new java.sql.Date(date.getTime())
-
-
-			return date
+			Date date = timeService.parseTime(formattedTime, timeZone)
+			return new java.sql.Time(date.getTime())
 		}
 		catch(ParseException e){
 			// As of grails 2.2.0, throwing an IllegalArgumentException is swallowed
 			// and the value remains unchanged.  By returning a string, a TypeMismatchException
 			// will be thrown during binding and an appropriate error message shown.
-			return formattedDate
+			return formattedTime
 		}
-	}
 
-	// this method may not be called for this implementation
-	// but is abstract in the parent class
-	@Override
-	java.sql.Date getDate(Calendar c) {
-		c.getTime()
+
 	}
 
 	@Override
 	Class getTargetType() {
-		java.sql.Date
+		java.sql.Time
 	}
 }

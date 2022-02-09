@@ -9,4 +9,13 @@ beans = {
 
 
 
+    myCustomStructuredTimeEditor(StructuredTImeEditor) {
+        it.autowire = 'byName'
+    }
+
+
+    myCustomStructuredDistanceEditor(DistanceEditor) {
+        it.autowire = 'byName'
+    }
+
 }

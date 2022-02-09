@@ -26,6 +26,15 @@
         ${book.published}
 
 
+        -
+
+        ${book.startTime}
+
+        -
+
+        ${book.distance}
+
+
         <br>
 
     </g:each>

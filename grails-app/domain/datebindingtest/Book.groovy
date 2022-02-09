@@ -1,5 +1,7 @@
 package datebindingtest
 
+import java.sql.Time
+
 class Book {
 
     String title
@@ -8,6 +10,10 @@ class Book {
     java.sql.Date completed
 
     Date published
+
+
+    Time startTime
+    Distance distance
 
 
 

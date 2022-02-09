@@ -69,6 +69,40 @@
 
     <br>
 
+    Start Time:
+
+    <input type="text" name="startTime_hourMin" placeholder="hh:ss" >
+
+    <select name="startTime_meridian" id="startTime_meridian">
+        <option value="" selected="selected"></option>
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+    </select>
+
+
+    <br>
+
+    Distance:
+
+    <input type="text" name="distance_magnitude" value="5" maxlength="8" size="8" style="width: 3em;" >
+
+    <select name="distance_unit" >
+        <option value="">-</option>
+        <option value="MILLIMETER">Millimeters</option>
+        <option value="CENTIMETER">Centimeters</option>
+        <option value="METER">Meters</option>
+        <option value="KILOMETER" selected="selected">Kilometers</option>
+        <option value="INCH">Inches</option>
+        <option value="FOOT">Feet</option>
+        <option value="YARD">Yards</option>
+        <option value="MILE">Miles</option>
+    </select>
+
+
+
+    <br>
+
+
 
     <g:submitButton name="Submit"></g:submitButton>
 
