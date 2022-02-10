@@ -34,7 +34,7 @@ class StructuredTImeEditor extends AbstractStructuredDateBindingEditor<java.sql.
 	java.sql.Time assemble(String propertyName, DataBindingSource fieldValues)
 			throws IllegalArgumentException {
 		final prefix = propertyName + '_'
-		assert fieldValues.containsProperty(prefix + "dayMonthYear"), "Can't populate a day, month, and year"
+		//assert fieldValues.containsProperty(prefix + "dayMonthYear"), "Can't populate a day, month, and year"
 
 
 		String hourMin = fieldValues.getPropertyValue(prefix + 'hourMin')

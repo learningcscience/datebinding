@@ -14,7 +14,7 @@ class Book {
 
     Time startTime
     Distance distance
-
+    static embedded = ['distance']
 
 
 

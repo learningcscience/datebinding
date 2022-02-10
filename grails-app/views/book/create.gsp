@@ -70,6 +70,7 @@
     <br>
 
     Start Time:
+    <input type="hidden" name="startTime" value="date.struct" />
 
     <input type="text" name="startTime_hourMin" placeholder="hh:ss" >
 
@@ -83,6 +84,10 @@
     <br>
 
     Distance:
+
+
+    <input type="hidden" name="distance" value="date.struct" />
+
 
     <input type="text" name="distance_magnitude" value="5" maxlength="8" size="8" style="width: 3em;" >
 

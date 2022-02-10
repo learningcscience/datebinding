@@ -14,7 +14,7 @@ beans = {
     }
 
 
-    myCustomStructuredDistanceEditor(DistanceEditor) {
+    myCustomStructuredDistanceEditor(StructuredDistanceEditor) {
         it.autowire = 'byName'
     }
 
